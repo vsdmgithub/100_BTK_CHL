@@ -1,0 +1,6 @@
+12.56637061435917295  		  	! Lx		Domain Length
+1.		                	! Ly		Half-domain height
+385			                ! ngx		Number of streamwise  grid points
+257			                ! ngy		Number of wall-normal grid points
+1			                ! imeshY	Mesh Sretching parameter (0=uniform)(1=tanh)
+15 			                ! ratio		Mesh Stretching Ratio (delta yn / delta y1)

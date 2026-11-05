@@ -1,0 +1,81 @@
+!=======================================================================
+! Input file for inflow-outflow boundary layer code
+!
+
+5   nsteps      number of time steps to run
+0.     timeLimit   stopping time (0.=ignore)
+24.    whours      wall hours (for SGI only; should be <= time in rundefs)
+1      iprint      interval to print out diagnostic information
+1      ipout       interval to print out restart file (might be same as iprint????)
+0      istat       Calculate statistics?  Sampling interval
+2800.  Re          Reynolds number (based on the total viscosity)
+0      iSGS        Use a subgrid-scale model?
+
+! use symmetric projector before simulation
+1      isymproj
+
+! Time-step control
+0         iCFL        Run at (1) constant CFL number   (0) constant dt
+0.2       CFLlimit    maximum allowable CFL number
+0         flag_newdt  Changed time step?
+0.005    dt          time step
+
+! Inflow generation
+0      inflow      Type of inflow: (0)laminar (1)data file
+0      inflowFluct (0)none (1)random (2)OS disc. (3)OS cont. (4)FST (5)2D+3D (6)multiple OS cont
+1.     ubulk        bulk velocity for laminar inflow
+
+! Boundary condition for each face
+1      BC_bottom   Type of boundary condition: (0)free slip (1)no slip (2) periodic 
+1      BC_top      Type of boundary condition: (0)free slip (1)no slip (2) periodic
+2      BC_left     Type of boundary condition: (1)prescribed-inflow    (2) periodic
+2      BC_right    Type of boundary condition: (1)convective-outflow   (2) periodic
+2      BC_back     Type of boundary condition: (0)free slip (1)no slip (2) periodic
+2      BC_front    Type of boundary condition: (0)free slip (1)no slip (2) periodic
+
+! For reading observation files
+2      iassim        (0) normal DNS (1) write observation (2) read observation, write flux
+1      ifric	     (0) skin friction is not observed (1)  skin friction is observed
+1      isubdomain    (0) subdomain field  not observed (1)  subdomain field  observed
+1      ObsStart      start number of observation files
+5      ObsEnd        end number of observation files
+1           ObsNt          how many time-steps between two observation files 
+1      istart
+24      iend
+4      iskip
+1      jstart 
+24     jend
+4      jskip
+1      kstart
+24     kend
+4      kskip
+0.  sigma
+
+! Animation
+4 	ianim
+0.2  	save_dt
+5   nsave_Rstrt  Time interval for writing restart file
+
+! Quick parameters
+0.00       x_QUICK       Pre-multiply the Quadratic Upstream Interpolation by (x_QUICK)
+
+! Poisson solver - multigrid parameter
+6        ngrid       Number of grid levels
+5        ncycle      Number of V-cycles through grid levels
+3        npre        Number of pre-iterations/relaxations at each level 
+100      nitmax      Maximum number of iterations
+200      nitmaxb     Maximum number of iterations at base level
+1.e-12   resmin      Minimum residual
+1.e-14   resminb     Minimum residual at base level
+1.00     omegak1     Relaxation parameter for multigrid solver
+1.00     omegakn     Relaxation parameter for multigrid solver
+
+! More stuff for Xiahua's code
+4        iprob       (4) turbine blade 
+2        ipoisson    NOT USED
+0        iread_avt   Read average data?
+
+! Pressure gradient
+1 			iPrj	 	(0)fixed dpdx (1)fixed mdot
+-3.214056E-06	GPxi     	Fixed pressure gradient (time average from fixed mdot code)
+
