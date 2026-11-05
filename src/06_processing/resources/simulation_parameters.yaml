@@ -1,0 +1,13 @@
+Re_cen: 10935.0
+Re_tau: 590.0
+u_tau: 0.053955189757658895
+delta_nu: 0.001694915254237288
+dt_m_p: 0.8276726108824874
+dt_m: 0.026
+nOBS: 60
+nOBS_inflowConstruct: 70
+ObsNt: 40
+dt: 0.00065
+CFL_x: 0.11
+CFL_viscous: 0.6
+nsteps: 2400

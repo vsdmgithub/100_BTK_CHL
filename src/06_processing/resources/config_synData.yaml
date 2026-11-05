@@ -1,0 +1,27 @@
+# ~============================================================================
+# ~ SYNTHETIC MEASUREMENT CONFIGURATION - Turbulent Channel Flow
+# ~============================================================================
+
+# ----------------------------------------------------------------------------
+# ^ PHYSICAL PARAMETERS (Flow Conditions, in outer units)
+# ----------------------------------------------------------------------------
+meas_TBL_thickness: 1.0
+meas_u_cen        : 1.0
+
+Re_cen            : 10935.0
+Re_tau            : 590.0
+
+# ----------------------------------------------------------------------------
+# ^ MEASUREMENT ACQUISITION SETTINGS
+# ----------------------------------------------------------------------------
+meas_number      : 100   # * Total number of temporal measurements
+meas_resolution_p: 15
+meas_gap_wall_p  : 22
+meas_precision   : 1.0E-12
+
+# ----------------------------------------------------------------------------
+# ^ NO OF MEASUREMENTS (same as U=2m/s TBL, except 'y' adjusted to accomodate within y+<590)
+# ----------------------------------------------------------------------------
+nex: 90           # * Number of measurements in x-direction
+ney: 35           # * Number of measurements in y-direction
+nez: 23           # * Number of measurements in z-direction
