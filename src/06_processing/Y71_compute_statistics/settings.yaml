@@ -1,0 +1,61 @@
+# --> General settings
+project_name   : "32_DA_CHL"
+code_name      : "compute_statistics"
+
+# --> Simulation details
+grid_name      : "G3S3"
+grid_name_FD   : "G_FD"
+DA_series      : "S"
+frame_ref      : 0
+nOLP           : 0
+sim_no         : 1
+sim_prefix     : "DA_"
+
+# --> Kernel parameters
+# kernel_choice  : 2
+# kernel_suffix  : '_Gaussian'
+# meas_name      : "G_N0" #^ Gaussian kernel with no noise
+# sim_suffix     : "_G_N0"
+# meas_name      : "G_N10" #^ Gaussian kernel with 10% noise
+<<<<<<< HEAD
+# sim_suffix     : "_G_N25"
+=======
+# sim_suffix     : "_G_N10"
+>>>>>>> c818371 (Commit from Local)
+# kernel_choice : 0
+# kernel_suffix : '_Delta'
+# meas_name      : "D_N0"  #^ Delta kernel with no noise
+# sim_suffix     : "_D_N0"
+# meas_name      : "D_N10" #^ Delta kernel with 10% noise
+# sim_suffix     : "_D_N10"
+
+# --> Time details
+t_start: 0
+t_end  : 2400
+t_skip : 40
+
+# --> Directory paths
+module_path    : "/src/06_processing/00_subdomain_module/" #^ Relative path to the project root
+rsrc_loc       : "../resources/"         #^ Location of resources
+truth_dir      : "ground_truth"
+save_dir       : 'statistics'            # Where to save the statistics data
+export_dir     : 'statistics'           # Where to save the error data
+
+# --> Feature toggles (flags)
+flag_output    : true
+flag_debug     : false
+<<<<<<< HEAD
+flag_truth     : true #! If true, statistics of ground truth is computed
+=======
+flag_truth     : false #! If true, statistics of ground truth is computed
+>>>>>>> c818371 (Commit from Local)
+flag_plotIG    : true
+flag_tecplot   : true
+
+# --> Parallelism settings
+use_parallel   : true
+<<<<<<< HEAD
+num_workers    : 4
+=======
+num_workers    : 8
+>>>>>>> c818371 (Commit from Local)

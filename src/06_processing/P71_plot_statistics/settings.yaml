@@ -1,0 +1,62 @@
+# --> General settings
+project_name   : "32_DA_CHL"
+code_name      : "plot_statistics"
+
+# --> Simulation details
+grid_name      : "G3S3"
+grid_name_FD   : "G_FD"
+DA_series      : "S"
+frame_ref      : 0
+nOLP           : 0
+sim_no         : 1
+sim_prefix     : "DA_"
+# sim_name_IG    : "IG_S001"
+
+# --> Kernel parameters
+# kernel_choice  : 2
+# kernel_suffix  : '_Gaussian'
+# meas_name      : "G_N0" #^ Gaussian kernel with no noise
+<<<<<<< HEAD
+sim_suffix     : "_G_N0"
+=======
+# sim_suffix     : "_G_N0"
+>>>>>>> c818371 (Commit from Local)
+# meas_name      : "G_N10" #^ Gaussian kernel with 10% noise
+# sim_suffix     : "_G_N25"
+# kernel_choice : 0
+# kernel_suffix : '_Delta'
+# meas_name      : "D_N0"  #^ Delta kernel with no noise
+<<<<<<< HEAD
+# sim_suffix     : "_D_N0"
+# meas_name      : "D_N10" #^ Delta kernel with 10% noise
+# sim_suffix     : "_D_N10"
+
+=======
+sim_suffix     : "_D_N0"
+# meas_name      : "D_N10" #^ Delta kernel with 10% noise
+# sim_suffix     : "_D_N10"
+
+# sim_suffix     : "_IPD15"
+
+>>>>>>> c818371 (Commit from Local)
+# --> Time details
+t_start: 0
+t_end  : 2400
+t_skip : 40
+
+# --> Directory paths
+module_path    : "/src/06_processing/00_subdomain_module/" #^ Relative path to the project root
+rsrc_loc       : "../resources/"         #^ Location of resources
+truth_dir      : "ground_truth"
+save_dir       : 'statistics'            # Where to save the statistics data
+export_dir     : 'statistics'            # Where to load the statistics data
+
+# --> Feature toggles (flags)
+flag_output    : true
+flag_debug     : false
+flag_plotIG    : false 
+flag_tecplot   : true
+
+# --> Parallelism settings
+use_parallel   : true
+num_workers    : 8

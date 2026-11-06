@@ -1,0 +1,38 @@
+# --> General settings
+project_name   : "100_BTK_CHL"
+code_name      : "inject_syn_vortex"
+
+# --> Simulation details
+sim_name       : "sim_package_testing"   #^ Source simulation package (initial condition + grid)
+frame_IC       : 0                       #^ Frame number of the initial condition to read/write
+
+# --> Vortex choice
+#^ Options: "lamb_oseen", "burgers", "burgers_packet", "hill", "taylor_green", "abc"
+vortex_choice  : "burgers_packet"
+case_suffix    : ""                      #^ Optional suffix to the output folder: type_<vortex_choice><case_suffix>
+
+# --> Vortex parameters (outer units: h = 1, U_b = 1)
+strength       : 20.0     #^ Peak perturbation velocity in units of u_tau (base level: 1 u_tau)
+sense          : -1       #^ Sense of rotation (+1: counter-clockwise about +axis, -1: clockwise)
+spread         : 0.06    #^ Core radius / size (outer units) -> ~14 wall units at Re_tau = 180
+length         : 0.6     #^ Axial e-folding length of the packet (burgers_packet only, outer units)
+y_core         : 0.09   #^ Height of the core from the chosen wall (outer units) -> ~27 wall units
+wall           : "bottom" #^ Options: "bottom", "top"
+axis           : "x"     #^ Vortex axis. Options: "x" (quasi-streamwise), "y" (wall-normal), "z" (spanwise)
+x_core         : null    #^ Streamwise location of the core (null -> middle of the domain)
+z_core         : null    #^ Spanwise location of the core (null -> middle of the domain)
+
+# --> Localization and wall treatment (applied on the vector potential, keeps div(u') = 0)
+win_factor     : 5.0     #^ Radius of the smooth window exp(-(r/W)^4), W = win_factor * spread
+wall_damp      : 0.03    #^ Wall damping thickness (outer units), enforces u' = v' = w' = 0 at the walls
+flag_strain    : false   #^ Burgers vortex only: also add the (windowed) axial strain field
+
+# --> Directory paths
+module_path    : "/src/06_processing/00_subdomain_module/" #^ Relative path to the project root
+save_dir       : "syn_vortex"            #^ Where to save the new initial condition (inside data/)
+fig_dir        : "figs"                  #^ Sub-folder of the output folder for the contour plots
+
+# --> Feature toggles (flags)
+flag_output    : true
+flag_debug     : false
+flag_plot      : true

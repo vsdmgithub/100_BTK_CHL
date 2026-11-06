@@ -11,7 +11,7 @@ Reynolds number in input                    :         2800.0
 Write Grid (compact_2D+1D=1, full_3D=2, no=0):             2
 Write 3D Instantaneous Field (Yes=1)        :              1
 Write 2D Instantaneous Field (Yes=1)        :              1
-2D slice z-plane index k (0 = mid-plane)    :              0
-Out. Location: ./plt_output/
+2D slice z-plane index k (0 = mid-plane)    :              1
+Out. Location: ./plt/
 ------------------------------------------------------------------
 1234567890123456789012345678901234567890123456789012345678901234567890

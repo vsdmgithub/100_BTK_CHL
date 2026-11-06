@@ -8,7 +8,7 @@ subroutine setup
   character(70):: dummy
 
   !==== READ INPUT FILE ========
-  open(2,file='input_postproc_plt',status='old',action='read')
+  open(2,file='input_postproc',status='old',action='read')
 
   do i = 1 , 4
     read (2,300) dummy

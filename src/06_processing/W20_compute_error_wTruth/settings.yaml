@@ -1,0 +1,39 @@
+# --> General settings
+project_name   : "32_DA_CHL"
+code_name      : "compute_error_wTruth"
+
+# --> Simulation details
+grid_name      : "G3S3"
+grid_name_FD   : "G_FD"
+DA_series      : "S"
+frame_ref      : 0
+nOLP           : 0
+sim_no         : 1
+sim_prefix     : "DA_"
+# sim_suffix     : "_D_N0"
+
+# --> Time details
+t_start: 0
+t_end  : 2400
+t_skip : 40
+
+# --> Directory paths
+module_path    : "/src/06_processing/00_subdomain_module/" #^ Relative path to the project root
+rsrc_loc       : "../resources/"         #^ Location of resources
+truth_dir      : "ground_truth"
+save_dir       : 'error_wTruth'           # Where to save the error data
+
+# --> Model parameters
+interp_method  : "linear" # Options: "nearest", "linear", "cubic", "quintic"
+
+# --> Feature toggles (flags)
+flag_output    : true
+flag_debug     : true
+flag_pfluc     : false
+flag_cut_zEdge : true 
+flag_cut_Inflow: true 
+flag_plotIG    : false
+
+# --> Parallelism settings
+use_parallel   : true
+num_workers    : 8
