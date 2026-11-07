@@ -31,14 +31,17 @@ contains
   end subroutine tec_open
 
   ! strand = 0 for static (grid) zones, >= 1 for time-dependent zones
-  subroutine tec_zone(ztitle, ni, nj, nk, nvar, time, strand)
+  ! nshare > 0: the first nshare variables are shared from zone 1 (not written again)
+  subroutine tec_zone(ztitle, ni, nj, nk, nvar, time, strand, nshare)
     character(*), intent(in) :: ztitle
     integer, intent(in)      :: ni, nj, nk, nvar, strand
     real(8), intent(in)      :: time
+    integer, intent(in), optional :: nshare
     integer :: ret, passive(nvar), valloc(nvar), share(nvar)
     passive = 0     ! no passive variables
     valloc  = 1     ! all variables nodal
     share   = 0     ! no variable sharing
+    if( present(nshare) ) share(1:nshare) = 1
     ret = teczne142( trim(ztitle)//char(0), 0, ni, nj, nk, 0, 0, 0, time, &
                      strand, 0, 1, 0, 0, 0, 0, 0, passive, valloc, share, 0 )
     call tec_check(ret, 'teczne142 '//trim(ztitle))

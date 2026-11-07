@@ -25,6 +25,7 @@ subroutine setup
   read (2,301) dummy, iwrite3d ; write(*,301) dummy, iwrite3d   ! 3D velocity toggle
   read (2,301) dummy, iwrite2d ; write(*,301) dummy, iwrite2d   ! 2D slice toggle
   read (2,301) dummy, k2d      ; write(*,301) dummy, k2d        ! z-plane of 2D slice
+  read (2,301) dummy, isingle  ; write(*,301) dummy, isingle    ! all snapshots in one file
   read (2,304) dummy, outdir   ; write(*,304) dummy, outdir     ! output directory
 
   read (2,300) dummy
@@ -39,6 +40,11 @@ subroutine setup
   if( k2d == 0 ) k2d = (ngz+1)/2
   if( k2d < 1 .or. k2d > ngz ) stop 'setup: 2D slice index k outside 1..ngz'
 
+  if( isingle == 1 .and. iwrite3d == 1 .and. wgrid /= 0 ) then
+    write(*,*) 'NOTE: single-file mode stores the grid inside vel.plt; wgrid -> 0'
+    wgrid = 0
+  end if
+
   if( iwrite3d == 1 .and. wgrid == 1 ) then
     write(*,*) 'WARNING: 3D velocity files need the full 3D grid; wgrid 1 -> 2'
     wgrid = 2
@@ -50,6 +56,9 @@ subroutine setup
   allocate( ut(0:ngz  ,0:ngx+1,0:ngy  ) )
   allocate( vt(0:ngz  ,0:ngx  ,0:ngy+1) )
   allocate( wt(0:ngz+1,0:ngx  ,0:ngy  ) )
+  if( isingle == 1 .and. iwrite2d == 1 ) then
+    allocate( s2d1(ngx,ngy,(insen-inssn)/insitv+1), s2d2(ngx,ngy,(insen-inssn)/insitv+1) )
+  end if
 
   return
 end subroutine setup

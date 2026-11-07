@@ -2,6 +2,7 @@
 program main
   use msetup
   use mvariable
+  use mtecio
   implicit none
   integer(int_p):: imore
 
@@ -21,6 +22,9 @@ program main
     if( iwrite3d == 1 ) call writeins3d_vel(imore)
 
   end do
+
+  if( isingle == 1 .and. iwrite3d == 1 ) call tec_close
+  if( isingle == 1 .and. iwrite2d == 1 ) call writeins2d_2_all('uraw','vraw')
 
   write(*,*) 'END SIMULATION! GOOD LUCK!'
 
