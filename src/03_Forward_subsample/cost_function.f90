@@ -123,7 +123,7 @@ subroutine cost_function()
                 do kk=1,ngzm
                         i = ibmap_1(ii)
                         j = jbmap_1(jj)
-                        k = kk
+                        k = k
                         !cost_subdomain = cost_subdomain + 0.5 *vflag(k,ii,jj)*weight_t*svretay(i,j)**2*(v(k,ii,jj) - vob(k,ii,jj))**2
                         cost_subdomain = cost_subdomain + 0.5 * vflag(k,ii,jj)*svretay(i,j)**2*(v(k,ii,jj) - vob(k,ii,jj))**2
                 end do

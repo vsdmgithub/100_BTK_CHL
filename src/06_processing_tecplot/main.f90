@@ -3,6 +3,7 @@ program main
   use msetup
   use mvariable
   use mtecio
+  use mplanes
   implicit none
   integer(int_p):: imore
 
@@ -18,13 +19,13 @@ program main
     write(*,101)
 
     call read_restart(imore)
-    if( iwrite2d == 1 ) call writeins2d_2(u(:,:,k2d),v(:,:,k2d),'uraw','vraw',imore)
+    if( iwrite2d == 1 ) call write_planes(imore)
     if( iwrite3d == 1 ) call writeins3d_vel(imore)
 
   end do
 
   if( isingle == 1 .and. iwrite3d == 1 ) call tec_close
-  if( isingle == 1 .and. iwrite2d == 1 ) call writeins2d_2_all('uraw','vraw')
+  if( isingle == 1 .and. iwrite2d == 1 ) call write_planes_all
 
   write(*,*) 'END SIMULATION! GOOD LUCK!'
 

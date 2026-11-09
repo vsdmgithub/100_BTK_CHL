@@ -9,7 +9,7 @@ module msetup
 use mparameter
 implicit none
 integer(int_p)::inssn,insen,insitv
-integer(int_p)::wgrid,iwrite3d,iwrite2d,k2d,isingle
+integer(int_p)::wgrid,iwrite3d,iwrite2d,isingle
 real(real_p)::Re
 character(50)::cfn
 character(50)::outdir
@@ -23,8 +23,6 @@ implicit none
 real(real_p),allocatable,dimension(:,:,:):: u,v,w
 ! Staggered work arrays, solver order (k,i,j), allocated once
 real(real_p),allocatable,dimension(:,:,:):: ut,vt,wt
-! Single-file mode: 2D slices of all snapshots, (ngx,ngy,nsnap), written after the loop
-real(real_p),allocatable,dimension(:,:,:):: s2d1,s2d2
 end module mvariable
 !===============================================
 module mgeomdata
