@@ -1,0 +1,31 @@
+  # --> GENERAL SETTINGS
+project_name: "100_BTK_CHL"
+code_name   : "plot_error_wTruth"
+
+  # --> SIMULATION DETAILS
+grid_name     : "G_test"
+sim_series    : "run_test_"
+sim_name      : "DA_laminarGuess"
+sim_index     : 1
+sim_name_truth: "truth"
+
+  # --> TIME DETAILS
+t_start: 0
+t_end  : 2000
+t_skip : 50
+frame0 : 0
+
+                                                         # --> MODULES & RESOURCES
+module_path : "/src/06_processing/00_subdomain_module/"  #^ Relative path to the project root
+rsrc_loc    : "../resources/"                            #^ Location of resources
+
+                             # --> INPUT/OUTPUT SETTINGS
+out_dir  : 'error_wTruth'       #^ Where the error data is saved (by W20)
+plot_dir : 'plot_error_wTruth'  #^ Where to save the plots
+
+  # --> PLOT SETTINGS
+n_profiles : 6   #^ Number of time instants shown in the y-profile plot
+
+  # --> FEATURE TOGGLES (FLAGS)
+flag_output: true
+flag_debug : true

@@ -12,7 +12,7 @@ sim_name_truth: "truth"
   # --> TIME DETAILS
 t_start: 0
 t_end  : 2000
-t_skip : 1000
+t_skip : 50
 frame0 : 0
 
 frame0_truth : 0 #^ Starting frame for the truth. 
