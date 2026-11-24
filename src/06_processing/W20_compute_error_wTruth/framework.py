@@ -125,7 +125,7 @@ logging.getLogger('matplotlib').setLevel(logging.INFO)
 #- ═════════════════════════════════════════════════════════════════════════════
 
 #* Flow parameters from simulation_parameters.yaml (Re_cen, Re_tau, dt already in globals)
-u_tau    = 1.0                     #^ nondimensional: half-height = 1, u_tau = 1
+u_tau    = (Re_tau/Re_cen)          #^ nondimensional: half-height = 1, u_tau = 1
 delta_nu = 1.0 / Re_tau            #^ nu = 1/Re_tau, so Re_tau = u_tau / nu
 t_delta  = Re_cen / Re_tau**2
 dt_p     = dt  / t_delta
