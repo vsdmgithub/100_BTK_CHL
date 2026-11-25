@@ -1,0 +1,41 @@
+  # --> GENERAL SETTINGS
+project_name: "100_BTK_CHL"
+code_name   : "inject_syn_vortex"
+
+  # --> SIMULATION DETAILS
+grid_name    : "G_test"
+sim_series   : "run_test_"
+sim_name     : "burgers_V11_v0"      #^ Simulation: <sim_series><sim_name> (argv[1] overrides)
+frame_IC     : 0                   #^ Frame number of the initial condition
+package_name : "sim_package_testing" #^ Template package (input files, run scripts) copied to the new simulation
+
+  # --> BURGERS VORTEX PACKET (outer units: h = 1, U_b = 1)
+  #^ Default: head of a strong hairpin vortex (spanwise, prograde, log-layer height) at Re_tau = 180
+strength : 8.0       #^ Peak swirl velocity, in units of u_tau (U_ref = sense * strength * u_tau) -> omega_0+ ~ 0.28
+sense    : -1        #^ Sense of rotation about +axis (+1: counter-clockwise, -1: clockwise)
+                     #^ Hairpin head (axis z): same sign as the mean shear, omega_z < 0 at bottom (-1), > 0 at top (+1)
+spread   : 0.15      #^ Core radius delta (= Burgers radius sqrt(4 nu / a)) -> 45 wall units, ~2.5 cells in x on G_test
+length   : 0.25      #^ Axial e-folding length L_0 of the packet envelope exp(-x_a^2 / (2 L_0^2)) -> head span ~ 4 L_0 = 180 wall units
+y_core   : 0.30      #^ Height of the core from the chosen wall -> 72 wall units (log layer)
+wall     : "bottom"  #^ Options: "bottom", "top"
+axis     : "z"       #^ Vortex axis. Options: "x" (streamwise), "y" (wall-normal), "z" (spanwise)
+x_core   : null      #^ Streamwise location of the core (null -> middle of the domain)
+z_core   : null      #^ Spanwise location of the core   (null -> middle of the domain)
+
+  # --> LOCALIZATION & WALL TREATMENT (applied on the vector potential, keeps div(u') = 0)
+win_factor : 3.0     #^ Radial window exp(-(r/W)^4), W = win_factor * spread
+wall_damp  : 0.20    #^ Wall damping thickness delta_w (36 wall units): u' = v' = w' = 0 at the walls, smooth no-slip adjustment
+flag_image : false   #^ Image vortex across the near wall (true: doubles the wall slip -> strong opposite-sign wall sheet)
+flag_mean_padded : false   #^ true: add the vortex to the mean profile only (log law u, v = w = 0); false: to the turbulent IC
+
+                                                         # --> MODULES & RESOURCES
+module_path : "/src/06_processing/00_subdomain_module/"  #^ Relative path to the project root
+rsrc_loc    : "../resources/"                            #^ Location of resources
+
+  # --> OUTPUT SETTINGS
+out_dir : 'syn_vortex'  # Where to save the plots (inside results/<sim_series><sim_name>/)
+
+  # --> FEATURE TOGGLES (FLAGS)
+flag_output: true
+flag_debug : false
+flag_plot  : true
