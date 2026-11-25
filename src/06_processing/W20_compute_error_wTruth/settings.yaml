@@ -11,15 +11,11 @@ sim_name_truth: "truth"
 
   # --> TIME DETAILS
 t_start: 0
-t_end  : 2000
-<<<<<<< HEAD
+t_end  : 1000
 t_skip : 50
-=======
-t_skip : 50 
->>>>>>> 07c0e49 (minor)
 frame0 : 0
 
-frame0_truth : 0 #^ Starting frame for the truth. 
+frame0_truth : 1000 #^ Starting frame for the truth. 
 
                                                          # --> MODULES & RESOURCES
 module_path : "/src/06_processing/00_subdomain_module/"  #^ Relative path to the project root
