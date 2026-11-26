@@ -1,0 +1,49 @@
+  # --> GENERAL SETTINGS
+project_name: "100_BTK_CHL"
+code_name   : "inject_syn_vortex_multiple"
+
+  # --> SIMULATION DETAILS
+grid_name    : "G_test"
+sim_series   : "run_test_"
+sim_name     : "burgers_V11_multi_v0"  #^ Simulation: <sim_series><sim_name>
+frame_IC     : 0                     #^ Frame number of the initial condition
+package_name : "sim_package_testing" #^ Template package (input files, run scripts) copied to the new simulation
+
+  # --> PLACEMENT OF THE VORTICES (x-z plane)
+  #^ Random uniform (x_c, z_c), accepted only if at least min_dist from every placed vortex (periodic in x and z)
+n_vortex    : 32       #^ Number of vortices
+min_dist    : 0.9      #^ Minimum horizontal distance between vortex centers (162 wall units; ~ window 3 * spread + head half-span 1.5 L_0)
+max_tries   : 10000    #^ Maximum random draws per vortex before giving up (reduce n_vortex or min_dist)
+rng_seed    : 1234     #^ Seed of the random draws (same seed -> same IC)
+
+  # --> RANDOM PARAMETERS: Gaussian (mean, sigma), clipped to mean +/- 2 sigma (outer units: h = 1, U_b = 1, Re_tau = 180)
+  #^ Hairpin heads at Re_tau = 180: y+ ~ 30 - 90, core diameter ~ 50 - 100 wall units, swirl ~ 2 - 8 u_tau, span ~ 100 - 250 wall units
+y_core_stat   : {mean: 0.30, sigma: 0.07}   #^ Height of the core from the wall -> y+ = 54 +/- 13   (range 29 - 79)
+strength_stat : {mean: 5.0,  sigma: 1.5}    #^ Peak swirl velocity [u_tau]      -> omega_0+ ~ 0.44  (range 2 - 8 u_tau)
+spread_stat   : {mean: 0.20, sigma: 0.04}   #^ Core radius delta                -> 36 +/- 7 wall units (range 22 - 50)
+length_stat   : {mean: 0.25, sigma: 0.06}   #^ Axial e-folding length L_0       -> head span ~ 4 L_0 = 180 +/- 43 wall units
+
+  # --> CONSTANT PARAMETERS (all vortices)
+sense    : -1        #^ Sense of rotation about +axis (+1: counter-clockwise, -1: clockwise)
+                     #^ Hairpin head (axis z): same sign as the mean shear, omega_z < 0 at bottom (-1), > 0 at top (+1)
+wall     : "bottom"  #^ Options: "bottom", "top"
+axis     : "z"       #^ Vortex axis. Options: "x" (streamwise), "y" (wall-normal), "z" (spanwise)
+
+  # --> LOCALIZATION & WALL TREATMENT (applied on the vector potential, keeps div(u') = 0)
+win_factor : 3.0     #^ Radial window exp(-(r/W)^4), W = win_factor * spread
+wall_damp  : 0.20    #^ Wall damping thickness delta_w (36 wall units): u' = v' = w' = 0 at the walls, smooth no-slip adjustment
+flag_image : false   #^ Image vortex across the near wall (true: doubles the wall slip -> strong opposite-sign wall sheet)
+flag_mean_padded : false   #^ true: add the vortices to the mean profile only (log law u, v = w = 0); false: to the turbulent IC
+
+                                                         # --> MODULES & RESOURCES
+module_path : "/src/06_processing/00_subdomain_module/"  #^ Relative path to the project root
+rsrc_loc    : "../resources/"                            #^ Location of resources
+func_path   : "../V11_inject_syn_vortex/"                #^ Location of burgers_functions.py (shared with V11_inject_syn_vortex)
+
+  # --> OUTPUT SETTINGS
+out_dir : 'syn_vortex'  # Where to save the plots (inside results/<sim_series><sim_name>/)
+
+  # --> FEATURE TOGGLES (FLAGS)
+flag_output: true
+flag_debug : false
+flag_plot  : true

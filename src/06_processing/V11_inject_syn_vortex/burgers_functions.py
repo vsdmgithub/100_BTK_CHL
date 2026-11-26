@@ -294,7 +294,8 @@ def get_crop_indices(r_cc, r_c, half):
     """
     return np.where(np.abs(r_cc - r_c) <= half)[0]
 
-def plot_vorticity_iso(om, center, title, fig_name=None, crop_fac=3.0, iso_frac=0.3, y_excl_plus=0.0, view=VIEW_DEFAULT):
+def plot_vorticity_iso(om, center, title, fig_name=None, crop_fac=3.0, iso_frac=0.3, y_excl_plus=0.0, view=VIEW_DEFAULT,
+                       half=None):
     """
     Live PyVista view of the |omega| iso-surface colored by omega_z, cropped around the vortex center
     (coordinates in wall units). The last view (as left in the window) is exported as PNG + PDF.
@@ -309,13 +310,15 @@ def plot_vorticity_iso(om, center, title, fig_name=None, crop_fac=3.0, iso_frac=
         y_excl_plus : exclude the region within y+ < y_excl_plus of both walls from the crop
                       (the wall shear layers otherwise set max|omega|)
         view     : camera view (see VIEW_DEFAULT)
+        half     : crop half-widths (hx, hy, hz); overrides crop_fac (e.g. (Lx, Ly, Lz) -> entire domain)
     """
     import pyvista as pv
 
         # --> Vorticity at the cell centers, cropped around the vortex center (clipped at the walls)
     om_c = get_cell_centered(*om)
-    half = [crop_fac * spread] * 3
-    half[AXIS_MAP[axis][0]] = crop_fac * length
+    if half is None:
+        half = [crop_fac * spread] * 3
+        half[AXIS_MAP[axis][0]] = crop_fac * length
     i_cr = get_crop_indices(xx_cc, center[0], half[0])
     j_cr = get_crop_indices(yy_cc, center[1], half[1])
     y_ex = y_excl_plus * delta_nu

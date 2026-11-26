@@ -1,0 +1,51 @@
+  # --> GENERAL SETTINGS
+project_name: "100_BTK_CHL"
+code_name   : "inject_syn_hairpin_multiple"
+
+  # --> SIMULATION DETAILS
+grid_name    : "G_test"
+sim_series   : "run_test_"
+sim_name     : "hairpin_V12_multi_v0"  #^ Simulation: <sim_series><sim_name>
+frame_IC     : 0                     #^ Frame number of the initial condition
+package_name : "sim_package_testing" #^ Template package (input files, run scripts) copied to the new simulation
+
+  # --> PLACEMENT OF THE HAIRPINS (x-z plane, position of the head)
+  #^ Random uniform (x_c, z_c), accepted only if at least min_dist from every placed hairpin (periodic in x and z)
+n_vortex    : 24       #^ Number of hairpins
+min_dist    : 0.85     #^ Minimum horizontal distance between heads (153 wall units; 1.5 * sqrt(8/24): same packing density as 8 at 1.5)
+max_tries   : 10000    #^ Maximum random draws per hairpin before giving up (reduce n_vortex or min_dist)
+rng_seed    : 1234     #^ Seed of the random draws (same seed -> same IC)
+
+  # --> RANDOM PARAMETERS: Gaussian (mean, sigma), clipped to mean +/- 2 sigma (outer units: h = 1, U_b = 1, Re_tau = 180)
+  #^ Means = defaults of V12_inject_syn_hairpin
+y_core_stat   : {mean: 0.55, sigma: 0.06}   #^ Height of the head from the wall -> y+ = 99 +/- 11 (raised if the leg ends get closer than spread to the wall)
+strength_stat : {mean: 8.0,  sigma: 1.5}    #^ Peak swirl velocity [u_tau]      -> omega_0+ ~ 0.93 (range 5 - 11 u_tau)
+spread_stat   : {mean: 0.15, sigma: 0.02}   #^ Core radius delta                -> 27 +/- 4 wall units
+height_stat   : {mean: 0.35, sigma: 0.05}   #^ H: drop from head to leg ends    -> 63 +/- 9 wall units
+span_stat     : {mean: 0.45, sigma: 0.06}   #^ B: spanwise scale                -> leg separation 2 B = 162 +/- 22 wall units
+
+  # --> CONSTANT PARAMETERS (all hairpins)
+sense    : -1        #^ Sense of rotation about the centreline tangent T (head: T = +z)
+                     #^ Prograde hairpin: omega_z < 0 in the head at the bottom wall (-1), > 0 at the top wall (+1)
+wall     : "bottom"  #^ Options: "bottom", "top"
+incline  : 45.0      #^ alpha [deg]: tilt of the hairpin plane from the wall-normal (0: upright, 90: lying flat)
+q_max    : 2.0       #^ q_m: extent of the legs; circulation tapered by exp(-(q/q_m)^6)
+
+  # --> LOCALIZATION & WALL TREATMENT (applied on the vector potential, keeps div(u') = 0)
+win_factor : 3.0     #^ Shield radius lambda = win_factor * spread (opposite-sign Gaussian around each core blob)
+wall_damp  : 0.15    #^ Wall damping thickness delta_w (27 wall units): u' = v' = w' = 0 at the walls
+flag_image : false   #^ Image hairpin across the near wall (true: doubles the wall slip -> strong opposite-sign wall sheet)
+flag_mean_padded : false   #^ true: add the hairpins to the mean profile only (log law u, v = w = 0); false: to the turbulent IC
+
+                                                         # --> MODULES & RESOURCES
+module_path : "/src/06_processing/00_subdomain_module/"  #^ Relative path to the project root
+rsrc_loc    : "../resources/"                            #^ Location of resources
+func_path   : "../V12_inject_syn_hairpin/"               #^ Location of hairpin_functions.py (shared with V12_inject_syn_hairpin)
+
+  # --> OUTPUT SETTINGS
+out_dir : 'syn_vortex'  # Where to save the plots (inside results/<sim_series><sim_name>/)
+
+  # --> FEATURE TOGGLES (FLAGS)
+flag_output: true
+flag_debug : false
+flag_plot  : true

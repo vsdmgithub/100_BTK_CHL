@@ -1,0 +1,47 @@
+  # --> GENERAL SETTINGS
+project_name: "100_BTK_CHL"
+code_name   : "inject_syn_hairpin"
+
+  # --> SIMULATION DETAILS
+grid_name    : "G_test"
+sim_series   : "run_test_"
+sim_name     : "hairpin_V12_v0"      #^ Simulation: <sim_series><sim_name>
+frame_IC     : 0                     #^ Frame number of the initial condition
+package_name : "sim_package_testing" #^ Template package (input files, run scripts) copied to the new simulation
+
+  # --> BURGERS CORE (outer units: h = 1, U_b = 1), same meaning as in V11_inject_syn_vortex
+strength : 8.0       #^ Peak swirl velocity of the core, in units of u_tau (U_ref = sense * strength * u_tau) -> omega_0+ ~ 0.93
+sense    : -1        #^ Sense of rotation about the centreline tangent T (head: T = +z)
+                     #^ Prograde hairpin: omega_z < 0 in the head at the bottom wall (-1), > 0 at the top wall (+1)
+spread   : 0.15      #^ Core radius delta (= Burgers radius sqrt(4 nu / a)) -> 27 wall units
+y_core   : 0.55      #^ Height of the HEAD from the chosen wall -> 99 wall units (log layer); leg ends at y_core - H cos(alpha) = 0.30
+wall     : "bottom"  #^ Options: "bottom", "top"
+x_core   : null      #^ Streamwise location of the head (null -> middle of the domain)
+z_core   : null      #^ Spanwise location of the head   (null -> middle of the domain)
+
+  # --> HAIRPIN CENTRELINE (Gaussian hairpin, doc/Analytical_vortices_p2.md, Sec. 1-2)
+  #^ X(q) = X_head - (H sin(alpha), H cos(alpha), 0) [1 - exp(-q^2/2)] + (0, 0, B q),   q in [-q_m, q_m]
+  #^ Head curvature kappa_0 = H / B^2; slender core needs kappa_0 * spread << 1 (here 0.26)
+height   : 0.35      #^ H: drop from the head to the leg ends, measured along the inclined plane -> 63 wall units
+span     : 0.45      #^ B: spanwise scale; legs at |z - z_c| ~ B (q = 1) -> leg separation ~ 2 B = 162 wall units
+incline  : 45.0      #^ alpha [deg]: tilt of the hairpin plane from the wall-normal (0: upright, 90: lying flat, head downstream)
+q_max    : 2.0       #^ q_m: extent of the legs; circulation tapered by exp(-(q/q_m)^6) (legs end at |z - z_c| ~ B q_m)
+
+  # --> LOCALIZATION & WALL TREATMENT (applied on the vector potential, keeps div(u') = 0)
+win_factor : 3.0     #^ Shield radius lambda = win_factor * spread: each core blob is screened by an opposite Gaussian of
+                     #^ radius lambda (zero net circulation far away) -> u' decays beyond ~ 2 lambda (replaces the window)
+wall_damp  : 0.15    #^ Wall damping thickness delta_w (27 wall units): u' = v' = w' = 0 at the walls
+flag_image : false   #^ Image hairpin across the near wall (true: doubles the wall slip -> strong opposite-sign wall sheet)
+flag_mean_padded : false   #^ true: add the hairpin to the mean profile only (log law u, v = w = 0); false: to the turbulent IC
+
+                                                         # --> MODULES & RESOURCES
+module_path : "/src/06_processing/00_subdomain_module/"  #^ Relative path to the project root
+rsrc_loc    : "../resources/"                            #^ Location of resources
+
+  # --> OUTPUT SETTINGS
+out_dir : 'syn_vortex'  # Where to save the plots (inside results/<sim_series><sim_name>/)
+
+  # --> FEATURE TOGGLES (FLAGS)
+flag_output: true
+flag_debug : false
+flag_plot  : true
